@@ -1,9 +1,9 @@
 export const swaggerDefinition = {
     openapi: '3.0.0',
     info: {
-        title: 'My API',
+        title: 'IT-Loop students api',
         version: '1.0.0',
-        description: 'API документация для моего приложения',
+        description: 'API документация для fake ecommerce',
     },
     servers: [
         {

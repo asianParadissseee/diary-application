@@ -3,6 +3,7 @@ import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
 import router from "./routes/index.js";
 import {swaggerDefinition} from "./docs/swaggerDef.js";
+import {errorMiddleware} from "./middleware/error.middleware.js";
 const app = express()
 const port = 3000
 
@@ -21,6 +22,7 @@ app.use(cors({
 }))
 app.use("/api", router)
 app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+app.use(errorMiddleware)
 
 const start = async () => {
     try {
