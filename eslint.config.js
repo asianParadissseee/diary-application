@@ -1,28 +1,37 @@
-import js from '@eslint/js'
-import globals from 'globals'
-import reactHooks from 'eslint-plugin-react-hooks'
-import reactRefresh from 'eslint-plugin-react-refresh'
-import tseslint from 'typescript-eslint'
+import react from 'eslint-plugin-react';
+import typescript from '@typescript-eslint/eslint-plugin';
+import parser from '@typescript-eslint/parser';
+import prettier from 'eslint-plugin-prettier';
 
-export default tseslint.config(
-  { ignores: ['dist'] },
-  {
-    extends: [js.configs.recommended, ...tseslint.configs.recommended],
-    files: ['**/*.{ts,tsx}'],
-    languageOptions: {
-      ecmaVersion: 2020,
-      globals: globals.browser,
+export default [
+    {
+        files: ['**/*.{js,jsx,ts,tsx}'],
+        ignores: ['node_modules', 'dist', 'build'],
+        languageOptions: {
+            parser: parser,
+            parserOptions: {
+                ecmaVersion: 2021,
+                sourceType: 'module',
+                ecmaFeatures: {
+                    jsx: true,
+                },
+            },
+        },
+        plugins: {
+            react, // теперь это объект
+            '@typescript-eslint': typescript,
+            prettier, // подключение prettier как плагина
+        },
+        rules: {
+            'prettier/prettier': 'error',
+            'react/react-in-jsx-scope': 'off', // Не нужно для новых React-проектов
+            '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+            '@typescript-eslint/explicit-module-boundary-types': 'off',
+        },
+        settings: {
+            react: {
+                version: 'detect', // Автоматическое определение версии React
+            },
+        },
     },
-    plugins: {
-      'react-hooks': reactHooks,
-      'react-refresh': reactRefresh,
-    },
-    rules: {
-      ...reactHooks.configs.recommended.rules,
-      'react-refresh/only-export-components': [
-        'warn',
-        { allowConstantExport: true },
-      ],
-    },
-  },
-)
+];
