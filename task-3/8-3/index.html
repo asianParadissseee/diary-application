@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Bank Card Validation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        input {
+            margin: 5px;
+            padding: 8px;
+        }
+        button {
+            padding: 8px 12px;
+            cursor: pointer;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+<form id="card-form">
+    <div>
+        <label>Card Number:</label>
+        <input type="text" maxlength="4" id="card1"> -
+        <input type="text" maxlength="4" id="card2"> -
+        <input type="text" maxlength="4" id="card3"> -
+        <input type="text" maxlength="4" id="card4">
+    </div>
+    <div>
+        <label>Name Surname:</label>
+        <input type="text" id="name">
+    </div>
+    <div>
+        <label>CVV:</label>
+        <input type="text" maxlength="3" id="cvv">
+    </div>
+    <button type="button" id="submit">Complete</button>
+</form>
+<p id="message"></p>
+
+<script>
+    const validCards = [
+        { number: "4413434135342424", cvv: "123" },
+        { number: "5500123412345678", cvv: "321" }
+    ];
+
+    document.getElementById("submit").addEventListener("click", () => {
+        const cardNumber = document.getElementById("card1").value +
+            document.getElementById("card2").value +
+            document.getElementById("card3").value +
+            document.getElementById("card4").value;
+        const cvv = document.getElementById("cvv").value;
+        const message = document.getElementById("message");
+
+        const isValid = validCards.some(card => card.number === cardNumber && card.cvv === cvv);
+
+        if (isValid) {
+            message.innerHTML = "<strong>Transaction completed</strong>";
+            message.style.color = "green";
+        } else {
+            message.innerHTML = "<strong>Invalid Data</strong>";
+            message.style.color = "red";
+        }
+    });
+</script>
+</body>
+</html>
